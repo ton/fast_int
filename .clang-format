@@ -1,0 +1,54 @@
+---
+BasedOnStyle: Google
+Language: Cpp
+
+CompactNamespaces: true
+NamespaceIndentation: None
+FixNamespaceComments: false
+
+AccessModifierOffset: -2
+ColumnLimit: 100
+
+AlignAfterOpenBracket: AlwaysBreak
+AlignEscapedNewlines: Right
+AlignTrailingComments: true
+
+AllowShortBlocksOnASingleLine: Always
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: true
+
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackParameters: false
+
+DerivePointerAlignment: false
+PointerAlignment: Right
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterNamespace: false
+  AfterClass: true
+  AfterFunction: true
+  AfterStruct: true
+  AfterControlStatement: Always
+  BeforeElse: true
+
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+SpaceAfterTemplateKeyword: false
+
+IncludeBlocks: Regroup
+IncludeCategories:
+    - Regex:  '^".*"'
+      Priority: 1
+    - Regex:  '^<plywoot/.*>'
+      Priority: 2
+    - Regex:  '^<catch2/.*>'
+      Priority: 2
+    - Regex:  '^<fast.*/.*>'
+      Priority: 2
+    - Regex:  '^<benchmark/.*>'
+      Priority: 2
+    - Regex:  '^<.*\.h>'
+      Priority: 3
+...
