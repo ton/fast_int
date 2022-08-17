@@ -82,6 +82,36 @@ TEMPLATE_TEST_CASE("Underflow", "", FAST_INT_INTEGER_TYPES)
   }
 }
 
+TEST_CASE("Leading whitespace is not ignored")
+{
+  const std::string s{" 123"};
+  int output{};
+  fast_int::from_chars_result result = fast_int::from_chars(s.data(), s.data() + s.size(), output);
+  REQUIRE(result.ec == std::errc::invalid_argument);
+  REQUIRE(result.ptr == s.data());
+  REQUIRE(output == 0);
+}
+
+TEST_CASE("Leading plus signed is not supported")
+{
+  const std::string s{"+123"};
+  int output{};
+  fast_int::from_chars_result result = fast_int::from_chars(s.data(), s.data() + s.size(), output);
+  REQUIRE(result.ec == std::errc::invalid_argument);
+  REQUIRE(result.ptr == s.data());
+  REQUIRE(output == 0);
+}
+
+TEST_CASE("Leading minus sign is not supported for unsigned types")
+{
+  const std::string s{"-123"};
+  unsigned int output{};
+  fast_int::from_chars_result result = fast_int::from_chars(s.data(), s.data() + s.size(), output);
+  REQUIRE(result.ec == std::errc::invalid_argument);
+  REQUIRE(result.ptr == s.data());
+  REQUIRE(output == 0);
+}
+
 // Separate test case for overflow handling of a 64-bit integer type; this hits
 // a slightly different code path than the other overflow test.
 TEST_CASE("OverflowUInt64")
