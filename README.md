@@ -64,7 +64,7 @@ Dependencies
 This library has no external dependencies. To be able to use install the header files and to build the unit tests and benchmarks, the following dependencies are required:
 
 * [CMake](https://cmake.org/)
-* [`ninja`](https://ninja-build.org/)
+* [ninja](https://ninja-build.org/)
 
 To be able to build the unit tests, the following dependencies are required:
 
@@ -100,7 +100,7 @@ Only base 10 integers are supported for now.
 Credit
 ------
 
-This implementation was almost one-to-one provided by Daniel Lemire in the issue tracker of the [`fast_float`](https://github.com/fastfloat/fast_float) library, in particular [issue #86](https://github.com/fastfloat/fast_float/issues/86), where someone requests `fast_int` functionality for the `fast_float` library. I intend to get this functionality merged into the `fast_float` library at some point, but at this moment I consider the code to be too immature, it needs more rigorous review.
+This implementation was almost one-to-one provided by Daniel Lemire in the issue tracker of the [`fast_float`](https://github.com/fastfloat/fast_float) library, in particular [issue #86](https://github.com/fastfloat/fast_float/issues/86), where someone requests `fast_int` functionality for the [`fast_float`](https://github.com/fastfloat/fast_float) library. I intend to get this functionality merged into the [`fast_float`](https://github.com/fastfloat/fast_float) library at some point, but at this moment I consider the code to be too immature, it needs more rigorous review.
 
 License
 -------
