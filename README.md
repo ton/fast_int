@@ -92,6 +92,17 @@ $ ./configure --build-type=release
 $ ninja -C build
 ```
 
+CMake
+-----
+
+Installing this library will automatically install CMake configuration files that allow you to find `fast_int` from other projects:
+
+```cmake
+find_package(fast_int REQUIRED)
+```
+
+This will add a header-only library target `fast_int::fast_int` you can link to for targets that depend on this library.
+
 Limitations
 -----------
 
