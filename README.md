@@ -9,9 +9,15 @@ Example
 Simple example that converts some text to an integer:
 
 ```C++
-const char *number{"12345"};
+#include <cassert>
+#include <cstdint>
+#include <cstring>
+
+const char *s{"12345"};
 std::int32_t n{};
-fast_int::from_chars_result result = fast_int::from_chars(number, number + std::strlen(number), n);
+fast_int::from_chars_result result = fast_int::from_chars(s, s + std::strlen(s), n);
+std::assert(!result.ec);
+std::assert(n == 12345);
 ```
 
 Usage
