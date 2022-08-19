@@ -30,7 +30,7 @@ template<typename T>
 from_chars_result from_chars(const char *first, const char *last, T &value) noexcept;
 ```
 
-This assumes that `T` is of some integral type. In case this precondition is not met, a compiler error is issues. Another precondition is that the textual number is in base 10. Hexadecimal numbers for example are not (yet) supported.
+This assumes that `T` is of some integral type. In case this precondition is not met, a compiler error is issued. Another precondition is that the textual number is in base 10. Hexadecimal numbers for example are not (yet) supported.
 
 Other than these limitations, this tries to mimic behavior of [`std::from_chars`](https://en.cppreference.com/w/cpp/utility/from_chars) as closely as possible for integral types.
 
