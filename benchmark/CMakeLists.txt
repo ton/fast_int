@@ -11,3 +11,7 @@ target_link_libraries(benchmarks
   fast_int
   FastFloat::fast_float
 )
+target_compile_options(benchmarks
+  PRIVATE
+  -fno-omit-frame-pointer
+)
