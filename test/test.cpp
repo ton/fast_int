@@ -112,6 +112,24 @@ TEST_CASE("Leading minus sign is not supported for unsigned types")
   REQUIRE(output == 0);
 }
 
+TEST_CASE("Unsigned number with an zero length input string")
+{
+  unsigned int output{};
+  fast_int::from_chars_result result = fast_int::from_chars(nullptr, nullptr, output);
+  REQUIRE(result.ec == std::errc::invalid_argument);
+  REQUIRE(result.ptr == nullptr);
+  REQUIRE(output == 0);
+}
+
+TEST_CASE("Signed number with an zero length input string")
+{
+  int output{};
+  fast_int::from_chars_result result = fast_int::from_chars(nullptr, nullptr, output);
+  REQUIRE(result.ec == std::errc::invalid_argument);
+  REQUIRE(result.ptr == nullptr);
+  REQUIRE(output == 0);
+}
+
 // Separate test case for overflow handling of a 64-bit integer type; this hits
 // a slightly different code path than the other overflow test.
 TEST_CASE("OverflowUInt64")

@@ -45,6 +45,8 @@ template<typename T>
 from_chars_result
 from_chars(const char *first, const char *last, T &value, std::true_type /* signed */) noexcept
 {
+  if (first == last) { return {first, std::errc::invalid_argument}; }
+
   const bool negative = (*first == '-');
   const char *p = first + negative;
   const char *const start_digits = p;
