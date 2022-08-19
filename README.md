@@ -67,12 +67,12 @@ BM_from_chars<std::int64_t>       14.1 ns         14.1 ns     49426511
 Dependencies
 ------------
 
-This library has no external dependencies. To be able to use install the header files and to build the unit tests and benchmarks, the following dependencies are required:
+This library has no external dependencies. To be able to use the library, the simplest approach is to just drop `fast_int.hpp` into your project directly. To be able to install the header files and CMake configuration files, the following dependencies are required:
 
 * [CMake](https://cmake.org/)
 * [ninja](https://ninja-build.org/)
 
-The following dependencies are not required to be able to use the `fast_int` library, but required for building the unit tests and benchmark tool. To be able to build the unit tests, the following dependency is required:
+To be able to build the unit tests, the following dependency is required:
 
 * [Catch2](https://github.com/catchorg/Catch2)
 
@@ -80,7 +80,7 @@ To be able to build the benchmarks, the following dependency is required:
 
 * [Benchmark](https://github.com/google/benchmark)
 
-The following dependencies are optional to build the benchmarks. In case they are not found, it will disable building some of the benchmarks but not all of them:
+In case these dependencies are not detected by CMake, building the unit tests and/or benchmarks is automatically disabled. Additionally, for the benchmark tool, there is one additional optional dependency which when detected will enable some additional benchmarks:
 
 * [fast_float](https://github.com/fastfloat/fast_float)
 
