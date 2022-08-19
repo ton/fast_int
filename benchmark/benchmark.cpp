@@ -21,6 +21,12 @@ constexpr const char *input<std::int32_t>()
 template<>
 constexpr const char *input<std::int64_t>()
 {
+  return "-223372036854775808";
+}
+
+template<>
+constexpr const char *input<std::uint64_t>()
+{
   return "9223372036854775808";
 }
 
@@ -47,8 +53,21 @@ static void BM_strtol(benchmark::State &state)
 
   for (auto _ : state)
   {
-    std::int32_t i{};
+    T i{};
     std::strtol(number, nullptr, 10);
+    benchmark::DoNotOptimize(sum += i);
+  }
+}
+
+template<typename T>
+static void BM_atol(benchmark::State &state)
+{
+  const char *number{input<T>()};
+  T sum{};
+
+  for (auto _ : state)
+  {
+    T i = std::atol(number);
     benchmark::DoNotOptimize(sum += i);
   }
 }
@@ -86,15 +105,27 @@ static void BM_from_chars(benchmark::State &state)
 }
 
 BENCHMARK(BM_fast_int<std::int32_t>);
-BENCHMARK(BM_fast_int<std::int64_t>);
-BENCHMARK(BM_strtol<std::int32_t>);
-BENCHMARK(BM_strtol<std::int64_t>);
 BENCHMARK(BM_from_chars<std::int32_t>);
-BENCHMARK(BM_from_chars<std::int64_t>);
-
+BENCHMARK(BM_strtol<std::int32_t>);
+BENCHMARK(BM_atol<std::int32_t>);
 #ifdef WITH_FAST_FLOAT
 BENCHMARK(BM_fast_float<std::int32_t>);
+#endif
+
+BENCHMARK(BM_fast_int<std::int64_t>);
+BENCHMARK(BM_from_chars<std::int64_t>);
+BENCHMARK(BM_strtol<std::int64_t>);
+BENCHMARK(BM_atol<std::int64_t>);
+#ifdef WITH_FAST_FLOAT
 BENCHMARK(BM_fast_float<std::int64_t>);
+#endif
+
+BENCHMARK(BM_fast_int<std::uint64_t>);
+BENCHMARK(BM_from_chars<std::uint64_t>);
+BENCHMARK(BM_strtol<std::uint64_t>);
+BENCHMARK(BM_atol<std::uint64_t>);
+#ifdef WITH_FAST_FLOAT
+BENCHMARK(BM_fast_float<std::uint64_t>);
 #endif
 
 BENCHMARK_MAIN();
