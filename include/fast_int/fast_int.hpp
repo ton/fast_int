@@ -22,8 +22,13 @@ template<typename T>
 constexpr std::size_t max_digit_count() noexcept
 {
   static_assert(std::is_integral<T>::value, "only integer types are supported");
-  static_assert(sizeof(T) <= 8 && (sizeof(T) == 1 || sizeof(T) % 2 == 0), "unexpected integer type");
-  return sizeof(T) == 1 ? 3 : (sizeof(T) == 2 ? 5 : (sizeof(T) == 4 ? 10 : (std::is_signed<T>::value ? 19 : 20)));
+  static_assert(
+      sizeof(T) == 1 || sizeof(T) == 2 || sizeof(T) == 4 || sizeof(T) == 8,
+      "unexpected integer type");
+
+  return sizeof(T) == 1
+             ? 3
+             : (sizeof(T) == 2 ? 5 : (sizeof(T) == 4 ? 10 : (std::is_signed<T>::value ? 19 : 20)));
 }
 
 template<>
