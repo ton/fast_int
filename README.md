@@ -72,13 +72,16 @@ This library has no external dependencies. To be able to use install the header 
 * [CMake](https://cmake.org/)
 * [ninja](https://ninja-build.org/)
 
-To be able to build the unit tests, the following dependencies are required:
+The following dependencies are not required to be able to use the `fast_int` library, but required for building the unit tests and benchmark tool. To be able to build the unit tests, the following dependency is required:
 
 * [Catch2](https://github.com/catchorg/Catch2)
 
-To be able to build the benchmarks, the following dependencies are required:
+To be able to build the benchmarks, the following dependency is required:
 
 * [Benchmark](https://github.com/google/benchmark)
+
+The following dependencies are optional to build the benchmarks. In case they are not found, it will disable building some of the benchmarks but not all of them:
+
 * [fast_float](https://github.com/fastfloat/fast_float)
 
 Installation
@@ -87,7 +90,7 @@ Installation
 The `fast_int` library is a header-only library. The simplest way to include it in your project is to directly drop `fast_int.hpp` in your project. An installation target is provided by the CMake files to be able to install the header in a location of your choice. A separate `configure` script is provided to make it a bit more convenient to execute CMake. For example, to install the header files in your `$HOME/.local` directory, issue:
 
 ```
-$ ./configure --prefix=$HOME/local --without-unit-tests --without-benchmarks
+$ ./configure --prefix=$HOME/local
 $ ninja -C build install
 ```
 

@@ -1,5 +1,3 @@
-find_package(Catch2 3 REQUIRED)
-
 # Main test executable; depends on Catch2, requires C++14 support.
 add_executable(tests main.cpp test.cpp)
 target_link_libraries(tests

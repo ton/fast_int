@@ -1,6 +1,9 @@
 #include <benchmark/benchmark.h>
-#include <fast_float/fast_float.h>
 #include <fast_int/fast_int.hpp>
+
+#ifdef WITH_FAST_FLOAT
+#include <fast_float/fast_float.h>
+#endif
 
 #include <charconv>
 #include <cstdint>
@@ -50,6 +53,7 @@ static void BM_strtol(benchmark::State &state)
   }
 }
 
+#ifdef WITH_FAST_FLOAT
 template<typename T>
 static void BM_fast_float(benchmark::State &state)
 {
@@ -64,6 +68,7 @@ static void BM_fast_float(benchmark::State &state)
     benchmark::DoNotOptimize(sum += i);
   }
 }
+#endif
 
 template<typename T>
 static void BM_from_chars(benchmark::State &state)
@@ -84,9 +89,12 @@ BENCHMARK(BM_fast_int<std::int32_t>);
 BENCHMARK(BM_fast_int<std::int64_t>);
 BENCHMARK(BM_strtol<std::int32_t>);
 BENCHMARK(BM_strtol<std::int64_t>);
-BENCHMARK(BM_fast_float<std::int32_t>);
-BENCHMARK(BM_fast_float<std::int64_t>);
 BENCHMARK(BM_from_chars<std::int32_t>);
 BENCHMARK(BM_from_chars<std::int64_t>);
+
+#ifdef WITH_FAST_FLOAT
+BENCHMARK(BM_fast_float<std::int32_t>);
+BENCHMARK(BM_fast_float<std::int64_t>);
+#endif
 
 BENCHMARK_MAIN();

@@ -8,8 +8,6 @@ Configures either a debug or release build, with the given installation prefix.
 
   --build-type=BUILD_TYPE   configures either a debug or release build
   --prefix=PREFIX           installation prefix
-  --without-unit-tests      skip building unit tests
-  --without-benchmarks      skip building benchmarks
 EOF
   exit 0
 }
@@ -31,14 +29,6 @@ for arg in "$@"; do
       ;;
     --prefix=*)
       cmake_install_prefix=${arg#*=}
-      shift
-      ;;
-    --without-unit-tests)
-      build_unit_tests="OFF"
-      shift
-      ;;
-    --without-benchmarks)
-      build_benchmarks="OFF"
       shift
       ;;
   esac
@@ -64,8 +54,6 @@ printf "** Configuring a $build_type build, with installation prefix '$cmake_ins
 cd build && cmake ../ -GNinja \
   -DCMAKE_MAKE_PROGRAM="$(command -v ninja)" \
   -DCMAKE_INSTALL_PREFIX="$cmake_install_prefix" \
-  -DCMAKE_BUILD_TYPE="$cmake_build_type" \
-  -DWITH_UNIT_TESTS:BOOL="${build_unit_tests}" \
-  -DWITH_BENCHMARKS:BOOL="${build_benchmarks}"
+  -DCMAKE_BUILD_TYPE="$cmake_build_type"
 
 printf "\n** Configuration complete, to build issue 'ninja -C build'.\n"

@@ -7,10 +7,6 @@ project(fast_int
   DESCRIPTION "C++11 header-only implementation of C++17s `std::from_chars` function"
 )
 
-# Flags that control whether the unit tests and benchmarks are included in the build.
-SET(WITH_BENCHMARKS "ON" CACHE BOOL "build benchmarks")
-SET(WITH_UNIT_TESTS "ON" CACHE BOOL "build unit tests")
-
 # Custom cmake modules.
 set(PROJECT_CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_CMAKE_MODULE_PATH})
@@ -34,18 +30,36 @@ target_include_directories(fast_int
 )
 target_compile_features(fast_int INTERFACE cxx_std_11)
 
-if(${WITH_UNIT_TESTS})
+# Find optional dependencies for the unit tests and benchmark tool.
+include(FeatureSummary)
+
+find_package(Catch2 QUIET)
+set_package_properties(Catch2 PROPERTIES TYPE DESCRIPTION "C++ test framework for unit-tests.")
+set_package_properties(Catch2 PROPERTIES TYPE OPTIONAL PURPOSE "Allows building the unit tests for this library.")
+
+find_package(benchmark QUIET)
+set_package_properties(benchmark PROPERTIES TYPE DESCRIPTION "a microbenchmark support library.")
+set_package_properties(benchmark PROPERTIES TYPE OPTIONAL PURPOSE "Allows building the benchmarks for this library.")
+
+find_package(FastFloat QUIET)
+set_package_properties(FastFloat PROPERTIES TYPE DESCRIPTION "fast and exact implementation of the C++ from_chars functions for float and double types.")
+set_package_properties(FastFloat PROPERTIES TYPE OPTIONAL PURPOSE "Allows benchmarking against the `fast_float` library.")
+
+feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES)
+
+# Define additional targets depending whether the dependencies have been found.
+if(TARGET Catch2::Catch2WithMain)
   add_subdirectory(test)
 endif()
 
-if(${WITH_BENCHMARKS})
+if(TARGET benchmark::benchmark)
   add_subdirectory(benchmark)
 endif()
 
-# install target
+# Add install target.
 include(GNUInstallDirs)
 
-# uninstall target
+# Add uninstall target.
 if(NOT TARGET uninstall)
   configure_file(
     "${PROJECT_CMAKE_MODULE_PATH}/cmake_uninstall.cmake.in"
