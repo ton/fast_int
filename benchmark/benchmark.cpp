@@ -105,18 +105,18 @@ static void BM_fast_float(benchmark::State &state)
 }
 #endif
 
-BENCHMARK(BM_fast_int<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{1}, 1000000);
-BENCHMARK(BM_from_chars<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{1}, 1000000);
+BENCHMARK(BM_fast_int<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{10}, 1000000);
+BENCHMARK(BM_from_chars<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{10}, 1000000);
 
 #ifdef WITH_FAST_FLOAT
-BENCHMARK(BM_fast_float<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{1}, 1000000);
+BENCHMARK(BM_fast_float<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{10}, 1000000);
 #endif
 
-BENCHMARK(BM_fast_int<std::uint64_t>)->RangeMultiplier(10)->Range(std::uint64_t{1}, 1000000);
-BENCHMARK(BM_from_chars<std::uint64_t>)->RangeMultiplier(10)->Range(std::uint64_t{1}, 1000000);
+BENCHMARK(BM_fast_int<std::uint64_t>)->RangeMultiplier(10)->Range(std::uint64_t{10}, 1000000);
+BENCHMARK(BM_from_chars<std::uint64_t>)->RangeMultiplier(10)->Range(std::uint64_t{10}, 1000000);
 
 #ifdef WITH_FAST_FLOAT
-BENCHMARK(BM_fast_float<std::uint64_t>)->RangeMultiplier(10)->Range(std::uint64_t{1}, 1000000);
+BENCHMARK(BM_fast_float<std::uint64_t>)->RangeMultiplier(10)->Range(std::uint64_t{10}, 1000000);
 #endif
 
 BENCHMARK_MAIN();
