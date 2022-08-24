@@ -8,30 +8,79 @@
 #include <charconv>
 #include <cstdint>
 #include <cstring>
+#include <map>
+
+namespace {
+
+template<typename T>
+struct Input
+{
+  std::vector<std::string> numbers;
+  T expected_sum{};
+};
+
+template<typename T>
+Input<T> generate_input(int range)
+{
+  static std::map<int, Input<T>> inputs;
+
+  auto [it, inserted] = inputs.emplace(range, Input<T>{});
+
+  if (inserted)
+  {
+    std::vector<std::string> &numbers{it->second.numbers};
+    T &sum{it->second.expected_sum};
+
+    constexpr int N{1000};
+    for (int i{0}; i < N; ++i)
+    {
+      const bool negate = std::is_signed<T>::value && std::rand() % 2 == 0;
+      T number = (negate ? -1 : 1) * std::rand() % range;
+      sum += number;
+      numbers.push_back(std::to_string(number));
+    }
+  }
+
+  return it->second;
+}
+
+}
 
 template<typename T>
 static void BM_fast_int(benchmark::State &state)
 {
-  const std::string s{std::to_string(state.range(0))};
+  Input<T> input = generate_input<T>(state.range(0));
 
   for (auto _ : state)
   {
-    T i{};
-    fast_int::from_chars(s.data(), s.data() + s.size(), i);
-    benchmark::DoNotOptimize(i);
+    T sum{0};
+    for (const std::string &number : input.numbers)
+    {
+      T i{};
+      fast_int::from_chars(number.data(), number.data() + number.size(), i);
+      sum += i;
+    }
+
+    if (input.expected_sum != sum) { state.SkipWithError("issue in number conversion"); }
   }
 }
 
 template<typename T>
-static void BM_strtol(benchmark::State &state)
+static void BM_from_chars(benchmark::State &state)
 {
-  const std::string s{std::to_string(state.range(0))};
+  Input<T> input  = generate_input<T>(state.range(0));
 
   for (auto _ : state)
   {
-    T i{};
-    std::strtol(s.data(), nullptr, 10);
-    benchmark::DoNotOptimize(i);
+    T sum{0};
+    for (const std::string &number : input.numbers)
+    {
+      T i{};
+      std::from_chars(number.data(), number.data() + number.size(), i);
+      sum += i;
+    }
+
+    if (input.expected_sum != sum) { state.SkipWithError("issue in number conversion "); }
   }
 }
 
@@ -39,32 +88,24 @@ static void BM_strtol(benchmark::State &state)
 template<typename T>
 static void BM_fast_float(benchmark::State &state)
 {
-  const std::string s{std::to_string(state.range(0))};
+  Input<T> input = generate_input<T>(state.range(0));
 
   for (auto _ : state)
   {
-    double i{};
-    fast_float::from_chars(s.data(), s.data() + s.size(), i);
-    benchmark::DoNotOptimize(i);
+    double sum{0};
+    for (const std::string &number : input.numbers)
+    {
+      double i{};
+      fast_float::from_chars(number.data(), number.data() + number.size(), i);
+      sum += i;
+    }
+
+    if (input.expected_sum != sum) { state.SkipWithError("issue in number conversion"); }
   }
 }
 #endif
 
-template<typename T>
-static void BM_from_chars(benchmark::State &state)
-{
-  const std::string s{std::to_string(state.range(0))};
-
-  for (auto _ : state)
-  {
-    T i{};
-    std::from_chars(s.data(), s.data() + s.size(), i);
-    benchmark::DoNotOptimize(i);
-  }
-}
-
 BENCHMARK(BM_fast_int<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{1}, 1000000);
-BENCHMARK(BM_strtol<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{1}, 1000000);
 BENCHMARK(BM_from_chars<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{1}, 1000000);
 
 #ifdef WITH_FAST_FLOAT
@@ -72,7 +113,6 @@ BENCHMARK(BM_fast_float<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{
 #endif
 
 BENCHMARK(BM_fast_int<std::uint64_t>)->RangeMultiplier(10)->Range(std::uint64_t{1}, 1000000);
-BENCHMARK(BM_strtol<std::uint64_t>)->RangeMultiplier(10)->Range(std::uint64_t{1}, 1000000);
 BENCHMARK(BM_from_chars<std::uint64_t>)->RangeMultiplier(10)->Range(std::uint64_t{1}, 1000000);
 
 #ifdef WITH_FAST_FLOAT

@@ -42,26 +42,30 @@ Benchmark results
 The benchmarks are somewhat limited, but the results give some impression on the performance of this library relative to other solutions. Note that `fast_float` right now cannot be used to convert textual numbers to integers, it is included in the benchmarks merely for illustrative purposes.
 
 ```
-2022-08-17T13:26:59+02:00
+2022-08-24T21:39:09+02:00
 Running build/benchmarks
-Run on (12 X 4208.2 MHz CPU s)
+Run on (12 X 3600 MHz CPU s)
 CPU Caches:
   L1 Data 32 KiB (x6)
   L1 Instruction 32 KiB (x6)
   L2 Unified 512 KiB (x6)
   L3 Unified 16384 KiB (x2)
-Load Average: 0.34, 0.18, 0.13
-----------------------------------------------------------------------
-Benchmark                            Time             CPU   Iterations
-----------------------------------------------------------------------
-BM_fast_int<std::int32_t>        0.239 ns        0.239 ns   1000000000
-BM_fast_int<std::int64_t>         13.1 ns         13.1 ns     53546725
-BM_strtol<std::int32_t>           10.3 ns         10.3 ns     68603272
-BM_strtol<std::int64_t>           27.2 ns         27.2 ns     26654442
-BM_fast_float<std::int32_t>       8.65 ns         8.65 ns     80912265
-BM_fast_float<std::int64_t>       13.3 ns         13.3 ns     52397382
-BM_from_chars<std::int32_t>      0.314 ns        0.314 ns   1000000000
-BM_from_chars<std::int64_t>       14.1 ns         14.1 ns     49426511
+Load Average: 0.45, 0.41, 0.27
+-------------------------------------------------------------------------------
+Benchmark                                     Time             CPU   Iterations
+-------------------------------------------------------------------------------
+BM_fast_int<std::int64_t>/100000           4898 ns         4896 ns       142309
+BM_fast_int<std::int64_t>/1000000          6034 ns         6032 ns       114400
+BM_from_chars<std::int64_t>/100000         7204 ns         7202 ns        98529
+BM_from_chars<std::int64_t>/1000000        8121 ns         8119 ns        85194
+BM_fast_float<std::int64_t>/100000        10362 ns        10359 ns        67476
+BM_fast_float<std::int64_t>/1000000       11087 ns        11084 ns        62867
+BM_fast_int<std::uint64_t>/100000          4343 ns         4341 ns       163451
+BM_fast_int<std::uint64_t>/1000000         4998 ns         4997 ns       138293
+BM_from_chars<std::uint64_t>/100000        4737 ns         4736 ns       147341
+BM_from_chars<std::uint64_t>/1000000       5570 ns         5568 ns       125368
+BM_fast_float<std::uint64_t>/100000        9320 ns         9317 ns        76618
+BM_fast_float<std::uint64_t>/1000000       9657 ns         9654 ns        72414
 ```
 
 Dependencies
