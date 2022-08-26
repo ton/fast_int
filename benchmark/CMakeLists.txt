@@ -22,5 +22,5 @@ endif()
 
 target_compile_options(benchmarks
   PRIVATE
-  -fno-omit-frame-pointer
+  -g
 )
