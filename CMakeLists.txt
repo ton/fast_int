@@ -41,10 +41,6 @@ find_package(benchmark QUIET)
 set_package_properties(benchmark PROPERTIES TYPE DESCRIPTION "a microbenchmark support library.")
 set_package_properties(benchmark PROPERTIES TYPE OPTIONAL PURPOSE "Allows building the benchmarks for this library.")
 
-find_package(FastFloat QUIET)
-set_package_properties(FastFloat PROPERTIES TYPE DESCRIPTION "fast and exact implementation of the C++ from_chars functions for float and double types.")
-set_package_properties(FastFloat PROPERTIES TYPE OPTIONAL PURPOSE "Allows benchmarking against the `fast_float` library.")
-
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES)
 
 # Define additional targets depending whether the dependencies have been found.

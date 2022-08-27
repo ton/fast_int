@@ -39,7 +39,7 @@ The result structure `fast_int::from_chars_result` is similar to that of `std::f
 Benchmark results
 -----------------
 
-The benchmarks are somewhat limited, but the results give some impression on the performance of this library relative to other solutions. Note that `fast_float` right now cannot be used to convert textual numbers to integers, it is included in the benchmarks merely for illustrative purposes.
+The benchmarks are somewhat limited, but the results give some impression on the performance of this library relative to other solutions.
 
 ```
 2022-08-24T21:39:09+02:00
@@ -58,14 +58,10 @@ BM_fast_int<std::int64_t>/100000           4898 ns         4896 ns       142309
 BM_fast_int<std::int64_t>/1000000          6034 ns         6032 ns       114400
 BM_from_chars<std::int64_t>/100000         7204 ns         7202 ns        98529
 BM_from_chars<std::int64_t>/1000000        8121 ns         8119 ns        85194
-BM_fast_float<std::int64_t>/100000        10362 ns        10359 ns        67476
-BM_fast_float<std::int64_t>/1000000       11087 ns        11084 ns        62867
 BM_fast_int<std::uint64_t>/100000          4343 ns         4341 ns       163451
 BM_fast_int<std::uint64_t>/1000000         4998 ns         4997 ns       138293
 BM_from_chars<std::uint64_t>/100000        4737 ns         4736 ns       147341
 BM_from_chars<std::uint64_t>/1000000       5570 ns         5568 ns       125368
-BM_fast_float<std::uint64_t>/100000        9320 ns         9317 ns        76618
-BM_fast_float<std::uint64_t>/1000000       9657 ns         9654 ns        72414
 ```
 
 Dependencies
@@ -84,9 +80,7 @@ To be able to build the benchmarks, the following dependency is required:
 
 * [Benchmark](https://github.com/google/benchmark)
 
-In case these dependencies are not detected by CMake, building the unit tests and/or benchmarks is automatically disabled. Additionally, for the benchmark tool, there is one additional optional dependency which when detected will enable some additional benchmarks:
-
-* [fast_float](https://github.com/fastfloat/fast_float)
+In case these dependencies are not detected by CMake, building the unit tests and/or benchmarks is automatically disabled.
 
 Installation
 ------------
