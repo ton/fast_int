@@ -66,15 +66,7 @@ from_chars(const char *first, const char *last, T &value, std::true_type /* sign
   {
     return {start_digits + digit_count, std::errc::result_out_of_range};
   }
-  // TODO(ton): the condition below may be more easily written as:
-  //
-  //   i > (std::numeric_limits<T>::max() + std::uint64_t(negative))
-  //
-  // but for some reason results in seriously degraded performance when compiled
-  // with GCC 9+.
-  else if (
-      (!negative && i > std::numeric_limits<T>::max()) ||
-      (negative && i + 1 > std::numeric_limits<T>::max()))
+  else if (i > std::numeric_limits<T>::max() + std::uint64_t(negative))
   {
     return {start_digits + digit_count, std::errc::result_out_of_range};
   }
