@@ -51,17 +51,28 @@ CPU Caches:
   L2 Unified 512 KiB (x6)
   L3 Unified 16384 KiB (x2)
 Load Average: 0.45, 0.41, 0.27
--------------------------------------------------------------------------------
-Benchmark                                     Time             CPU   Iterations
--------------------------------------------------------------------------------
-BM_fast_int<std::int64_t>/100000           4898 ns         4896 ns       142309
-BM_fast_int<std::int64_t>/1000000          6034 ns         6032 ns       114400
-BM_from_chars<std::int64_t>/100000         7204 ns         7202 ns        98529
-BM_from_chars<std::int64_t>/1000000        8121 ns         8119 ns        85194
-BM_fast_int<std::uint64_t>/100000          4343 ns         4341 ns       163451
-BM_fast_int<std::uint64_t>/1000000         4998 ns         4997 ns       138293
-BM_from_chars<std::uint64_t>/100000        4737 ns         4736 ns       147341
-BM_from_chars<std::uint64_t>/1000000       5570 ns         5568 ns       125368
+----------------------------------------------------------------------------------
+Benchmark                                        Time             CPU   Iterations
+----------------------------------------------------------------------------------
+BM_fast_int<std::int64_t>/100000              5126 ns         5121 ns       137953
+BM_fast_int_swar<std::int64_t>/100000         4296 ns         4291 ns       162853
+BM_from_chars<std::int64_t>/100000            6031 ns         6025 ns       116828
+BM_fast_float<std::int64_t>/100000            5318 ns         5313 ns       130951
+
+BM_fast_int<std::uint64_t>/100000             4257 ns         4253 ns       164435
+BM_fast_int_swar<std::uint64_t>/100000        3098 ns         3095 ns       226380
+BM_from_chars<std::uint64_t>/100000           5628 ns         5622 ns       123234
+BM_fast_float<std::uint64_t>/100000           4840 ns         4835 ns       139433
+
+BM_fast_int<std::int64_t>/1000000             5890 ns         5884 ns       116377
+BM_fast_int_swar<std::int64_t>/1000000        4976 ns         4971 ns       139970
+BM_from_chars<std::int64_t>/1000000           8803 ns         8793 ns        96929
+BM_fast_float<std::int64_t>/1000000           6717 ns         6711 ns       102308
+
+BM_fast_int<std::uint64_t>/1000000            5050 ns         5045 ns       139329
+BM_fast_int_swar<std::uint64_t>/1000000       3764 ns         3760 ns       188653
+BM_from_chars<std::uint64_t>/1000000          6720 ns         6713 ns       104054
+BM_fast_float<std::uint64_t>/1000000          5079 ns         5074 ns       137876
 ```
 
 Dependencies
@@ -80,7 +91,11 @@ To be able to build the benchmarks, the following dependency is required:
 
 * [Benchmark](https://github.com/google/benchmark)
 
-In case these dependencies are not detected by CMake, building the unit tests and/or benchmarks is automatically disabled.
+In case these dependencies are not found by CMake, building of the unit tests and/or benchmarks is automatically disabled.
+
+To be able to benchmark against `fast_float`'s `from_chars` implementation, the following dependency is required:
+
+* [fast_float](https://github.com/fastfloat/fast_float)
 
 Installation
 ------------
@@ -118,7 +133,7 @@ Only base 10 integers are supported for now.
 Credit
 ------
 
-This implementation was almost one-to-one provided by Daniel Lemire in the issue tracker of the [`fast_float`](https://github.com/fastfloat/fast_float) library, in particular [issue #86](https://github.com/fastfloat/fast_float/issues/86), where someone requests `fast_int` functionality for the [`fast_float`](https://github.com/fastfloat/fast_float) library. I intend to get this functionality merged into the [`fast_float`](https://github.com/fastfloat/fast_float) library at some point, but at this moment I consider the code to be too immature, it needs more rigorous review.
+This implementation was almost one-to-one provided by Daniel Lemire in the issue tracker of the [`fast_float`](https://github.com/fastfloat/fast_float) library, in particular [issue #86](https://github.com/fastfloat/fast_float/issues/86), where someone requests `fast_int` functionality for the [`fast_float`](https://github.com/fastfloat/fast_float) library. Since this library was implemented, someone provided a `from_chars` implementation for `fast_float` that performs a little bit better than the `from_chars` implementation in the standard library on my machine. However, it is not faster than the SWAR version provided by this library as the benchmark results show.
 
 License
 -------
