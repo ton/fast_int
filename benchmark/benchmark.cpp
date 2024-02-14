@@ -83,7 +83,7 @@ static void BM_fast_int_swar(benchmark::State &state)
 template<typename T>
 static void BM_from_chars(benchmark::State &state)
 {
-  Input<T> input  = generate_input<T>(state.range(0));
+  Input<T> input = generate_input<T>(state.range(0));
 
   for (auto _ : state)
   {
