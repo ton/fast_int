@@ -36,6 +36,10 @@ target_compile_features(fast_int INTERFACE cxx_std_11)
 # Find optional dependencies for the unit tests and benchmark tool.
 include(FeatureSummary)
 
+find_package(FastFloat QUIET)
+set_package_properties(FastFloat PROPERTIES TYPE DESCRIPTION "fast and exact implementation of the C++ from_chars functions for float and double types.")
+set_package_properties(FastFloat PROPERTIES TYPE RECOMMENDED PURPOSE "Benchmark against fast_float's integer conversion functionality.")
+
 find_package(Catch2 QUIET)
 set_package_properties(Catch2 PROPERTIES TYPE DESCRIPTION "C++ test framework for unit-tests.")
 set_package_properties(Catch2 PROPERTIES TYPE OPTIONAL PURPOSE "Allows building the unit tests for this library.")
