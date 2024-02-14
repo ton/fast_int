@@ -135,6 +135,8 @@ Credit
 
 This implementation was almost one-to-one provided by Daniel Lemire in the issue tracker of the [`fast_float`](https://github.com/fastfloat/fast_float) library, in particular [issue #86](https://github.com/fastfloat/fast_float/issues/86), where someone requests `fast_int` functionality for the [`fast_float`](https://github.com/fastfloat/fast_float) library. Since this library was implemented, someone provided a `from_chars` implementation for `fast_float` that performs a little bit better than the `from_chars` implementation in the standard library on my machine. However, it is not faster than the SWAR version provided by this library as the benchmark results show.
 
+The SWAR implementation provided by `fast_int` was inspired by [work done by Wojciech Muła](http://0x80.pl/notesen/2014-10-12-parsing-decimal-numbers-part-1-swar.html), and the various blog posts of Daniel Lemire on the topic, e.g. [Quickly parsing eight digits](https://lemire.me/blog/2018/10/03/quickly-parsing-eight-digits/).
+
 License
 -------
 
