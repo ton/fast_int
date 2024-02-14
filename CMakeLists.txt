@@ -14,6 +14,9 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_CMAKE_MODULE_PATH})
 # Require C++11 support.
 set(CMAKE_CXX_STANDARD 11)
 
+# Set release flags.
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+
 # Put all executables in build/.
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
