@@ -39,7 +39,7 @@ The result structure `fast_int::from_chars_result` is similar to that of `std::f
 Benchmark results
 -----------------
 
-The benchmarks are somewhat limited, but the results give some impression on the performance of this library relative to other solutions.
+The benchmarks are somewhat limited, but the results give some impression on the performance of this library relative to other solutions. The following results were obtained on an AMD Ryzen 5 3600 6-Core processor using a Kingston A2000 NVMe SSD. PLYbench was compiled using GCC 13.21, with optimization level -O3.
 
 ```
 2022-08-24T21:39:09+02:00
