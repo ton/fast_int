@@ -19,6 +19,15 @@ struct from_chars_result
 
 namespace detail {
 
+inline std::uint32_t bswap32(std::uint32_t x)
+{
+#if defined(_MSC_VER)
+  return _byteswap_ulong(x);
+#elif defined(__GNUC__) || defined(__clang__)
+  return __builtin_bswap32(x);
+#endif
+}
+
 template<typename T>
 constexpr std::size_t max_digit_count() noexcept
 {
@@ -110,8 +119,7 @@ from_chars(const char *first, const char *last, T &value, std::false_type /* uns
 
 inline uint32_t swar4(const char *s)
 {
-  std::uint32_t input;
-  __asm__ __volatile__("bswap %0" : "=r"(input) : "0"(*reinterpret_cast<const std::uint32_t *>(s)));
+  std::uint32_t input = detail::bswap32(*reinterpret_cast<const std::uint32_t *>(s));
 
   const std::uint32_t t1 = input - 0x30303030;
   const std::uint32_t t2 = (t1 * 10) >> 8;
