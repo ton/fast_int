@@ -6,6 +6,10 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Catch2)
 
+list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
+include(CTest)
+include(Catch)
+
 # Main test executable; depends on Catch2, requires C++14 support.
 add_executable(tests main.cpp test.cpp)
 target_link_libraries(tests
@@ -21,3 +25,5 @@ target_link_libraries(test_cpp11
   PRIVATE
     fast_int
 )
+
+catch_discover_tests(tests)

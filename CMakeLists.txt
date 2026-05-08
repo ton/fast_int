@@ -44,6 +44,7 @@ option(FASTINT_WITH_TEST "Enable building the unit test binary" OFF)
 
 # Define additional targets depending on the current configuration.
 if(FASTINT_WITH_TEST)
+  enable_testing()
   add_subdirectory(test)
 else()
   message(STATUS "Tests are disabled, set FASTINT_WITH_TEST to ON to run tests.")
