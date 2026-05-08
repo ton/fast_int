@@ -14,15 +14,18 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_CMAKE_MODULE_PATH})
 # Require C++11 support.
 set(CMAKE_CXX_STANDARD 11)
 
-# Set release flags.
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
-
 # Put all executables in build/.
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-# Set the appropriate compiler flags.
-add_compile_options("$<$<CONFIG:DEBUG>:-Wall;-Wextra;-Wshadow;-Wno-unused-variable;-Wno-unused-function;-Wno-unused-parameter;-Werror;-Wstrict-overflow;-fno-strict-aliasing;-march=native>")
-add_compile_options("$<$<CONFIG:RELEASE>:-Wall;-Wextra;-Wshadow;-Wpedantic;-Werror;-Wno-unused-parameter;-Wstrict-overflow;-fno-strict-aliasing;-march=native>")
+# Set the appropriate compiler flags (GCC).
+add_compile_options("$<$<CXX_COMPILER_ID:GNU>:-Wall;-Werror;-Wextra;-Wshadow;-Wno-unused-parameter;-Wstrict-overflow;-fno-strict-aliasing;-march=native>")
+add_compile_options("$<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:DEBUG>>:-g;-Wno-unused-variable;-Wno-unused-function>")
+add_compile_options("$<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:RELEASE>>:-Wpedantic;-O3;-DNDEBUG>")
+
+# Set the appropriate compiler flags (MSVC).
+add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/W4;/WX;/permissive>")
+add_compile_options("$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:DEBUG>>:/Od>")
+add_compile_options("$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RELEASE>>:/O2>")
 
 # Define the header-only library target for fast_int.
 add_library(fast_int INTERFACE)
