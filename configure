@@ -2,7 +2,7 @@
 
 print_usage() {
   (cat | fold -w 80) << EOF
-Usage: configure [--build=debug|release] [--prefix=<install prefix>]
+Usage: configure [--build-type=debug|release] [--prefix=<install prefix>]
 
 Configures either a debug or release build, with the given installation prefix.
 
