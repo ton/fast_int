@@ -84,6 +84,23 @@ static void BM_fast_int_swar(benchmark::State &state)
 }
 
 template<typename T>
+static void BM_atoi(benchmark::State &state)
+{
+  Input<T> input = generate_input<T>(state.range(0));
+
+  for (auto _ : state)
+  {
+    T sum{0};
+    for (const std::string &number : input.numbers)
+    {
+      sum += std::atoi(number.data());
+    }
+
+    if (input.expected_sum != sum) { state.SkipWithError("issue in number conversion "); }
+  }
+}
+
+template<typename T>
 static void BM_from_chars(benchmark::State &state)
 {
   Input<T> input = generate_input<T>(state.range(0));
@@ -125,6 +142,7 @@ static void BM_fast_float(benchmark::State &state)
 
 BENCHMARK(BM_fast_int<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{10}, 1000000);
 BENCHMARK(BM_fast_int_swar<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{10}, 1000000);
+BENCHMARK(BM_atoi<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{10}, 1000000);
 BENCHMARK(BM_from_chars<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{10}, 1000000);
 #ifdef HAS_FAST_FLOAT
 BENCHMARK(BM_fast_float<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{10}, 1000000);
@@ -132,6 +150,7 @@ BENCHMARK(BM_fast_float<std::int64_t>)->RangeMultiplier(10)->Range(std::int64_t{
 
 BENCHMARK(BM_fast_int<std::uint64_t>)->RangeMultiplier(10)->Range(std::uint64_t{10}, 1000000);
 BENCHMARK(BM_fast_int_swar<std::uint64_t>)->RangeMultiplier(10)->Range(std::int64_t{10}, 1000000);
+BENCHMARK(BM_atoi<std::uint64_t>)->RangeMultiplier(10)->Range(std::int64_t{10}, 1000000);
 BENCHMARK(BM_from_chars<std::uint64_t>)->RangeMultiplier(10)->Range(std::uint64_t{10}, 1000000);
 #ifdef HAS_FAST_FLOAT
 BENCHMARK(BM_fast_float<std::uint64_t>)->RangeMultiplier(10)->Range(std::int64_t{10}, 1000000);
