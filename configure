@@ -54,6 +54,9 @@ printf "** Configuring a $build_type build, with installation prefix '$cmake_ins
 cd build && cmake ../ -GNinja \
   -DCMAKE_MAKE_PROGRAM="$(command -v ninja)" \
   -DCMAKE_INSTALL_PREFIX="$cmake_install_prefix" \
-  -DCMAKE_BUILD_TYPE="$cmake_build_type"
+  -DCMAKE_BUILD_TYPE="$cmake_build_type" \
+  -DFASTINT_WITH_TEST=ON \
+  -DFASTINT_WITH_BENCHMARK=ON \
+  -DFASTINT_WITH_BENCHMARK_AGAINST_FAST_FLOAT=ON
 
 printf "\n** Configuration complete, to build issue 'ninja -C build'.\n"

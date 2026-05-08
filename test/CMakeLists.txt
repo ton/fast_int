@@ -1,3 +1,11 @@
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2
+  GIT_TAG v3.14.0
+)
+
+FetchContent_MakeAvailable(Catch2)
+
 # Main test executable; depends on Catch2, requires C++14 support.
 add_executable(tests main.cpp test.cpp)
 target_link_libraries(tests

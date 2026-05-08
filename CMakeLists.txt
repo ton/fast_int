@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 
 project(fast_int
   VERSION 0.0.1
@@ -34,29 +34,25 @@ target_include_directories(fast_int
 target_compile_features(fast_int INTERFACE cxx_std_11)
 
 # Find optional dependencies for the unit tests and benchmark tool.
-include(FeatureSummary)
+include(CMakeDependentOption)
+include(FetchContent)
 
-find_package(FastFloat QUIET)
-set_package_properties(FastFloat PROPERTIES TYPE DESCRIPTION "fast and exact implementation of the C++ from_chars functions for float and double types.")
-set_package_properties(FastFloat PROPERTIES TYPE RECOMMENDED PURPOSE "Benchmark against fast_float's integer conversion functionality.")
+# Options supported by this build.
+option(FASTINT_WITH_BENCHMARK "Enable building the benchmark binary" OFF)
+cmake_dependent_option(FASTINT_WITH_BENCHMARK_AGAINST_FAST_FLOAT "Pull in fast_float as a dependency and benchmark against it" OFF "FASTINT_WITH_BENCHMARK" OFF)
+option(FASTINT_WITH_TEST "Enable building the unit test binary" OFF)
 
-find_package(Catch2 QUIET)
-set_package_properties(Catch2 PROPERTIES TYPE DESCRIPTION "C++ test framework for unit-tests.")
-set_package_properties(Catch2 PROPERTIES TYPE OPTIONAL PURPOSE "Allows building the unit tests for this library.")
-
-find_package(benchmark QUIET)
-set_package_properties(benchmark PROPERTIES TYPE DESCRIPTION "a microbenchmark support library.")
-set_package_properties(benchmark PROPERTIES TYPE OPTIONAL PURPOSE "Allows building the benchmarks for this library.")
-
-feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES)
-
-# Define additional targets depending whether the dependencies have been found.
-if(TARGET Catch2::Catch2WithMain)
+# Define additional targets depending on the current configuration.
+if(FASTINT_WITH_TEST)
   add_subdirectory(test)
+else()
+  message(STATUS "Tests are disabled, set FASTINT_WITH_TEST to ON to run tests.")
 endif()
 
-if(TARGET benchmark::benchmark)
+if(FASTINT_WITH_BENCHMARK)
   add_subdirectory(benchmark)
+else()
+  message(STATUS "Benchmarks are disabled, set FASTINT_WITH_BENCHMARK to ON to run benchmarks.")
 endif()
 
 # Add install target.
