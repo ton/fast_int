@@ -2,8 +2,8 @@
 add_executable(tests main.cpp test.cpp)
 target_link_libraries(tests
   PRIVATE
-  Catch2::Catch2WithMain
-  fast_int
+    Catch2::Catch2WithMain
+    fast_int
 )
 
 # Executables that are only compiled to test compatibility for the various C++
@@ -11,5 +11,5 @@ target_link_libraries(tests
 add_executable(test_cpp11 test_cpp11.cpp)
 target_link_libraries(test_cpp11
   PRIVATE
-  fast_int
+    fast_int
 )
