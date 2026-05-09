@@ -16,6 +16,7 @@ target_link_libraries(tests
   PRIVATE
     Catch2::Catch2WithMain
     fast_int
+    fast_int_internal_compiler_flags
 )
 
 # Executables that are only compiled to test compatibility for the various C++
@@ -24,6 +25,7 @@ add_executable(test_cpp11 test_cpp11.cpp)
 target_link_libraries(test_cpp11
   PRIVATE
     fast_int
+    fast_int_internal_compiler_flags
 )
 
 catch_discover_tests(tests)

@@ -26,15 +26,17 @@ target_include_directories(fast_int
 )
 target_compile_features(fast_int INTERFACE cxx_std_11)
 
+add_library(fast_int_internal_compiler_flags INTERFACE)
+
 # Set the appropriate compiler flags (GCC).
-target_compile_options(fast_int INTERFACE "$<$<CXX_COMPILER_ID:GNU>:-Wall;-Werror;-Wextra;-Wshadow;-Wstrict-overflow;-fno-strict-aliasing;-march=native>")
-target_compile_options(fast_int INTERFACE "$<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:DEBUG>>:-g;-Wno-unused-parameter;-Wno-unused-variable;-Wno-unused-function>")
-target_compile_options(fast_int INTERFACE "$<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:RELEASE>>:-Wunused-parameter;-Wconversion;-Wpedantic;-O3;-DNDEBUG>")
+target_compile_options(fast_int_internal_compiler_flags INTERFACE "$<$<CXX_COMPILER_ID:GNU>:-Wall;-Werror;-Wextra;-Wshadow;-Wstrict-overflow;-fno-strict-aliasing;-march=native>")
+target_compile_options(fast_int_internal_compiler_flags INTERFACE "$<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:DEBUG>>:-g;-Wno-unused-parameter;-Wno-unused-variable;-Wno-unused-function>")
+target_compile_options(fast_int_internal_compiler_flags INTERFACE "$<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:RELEASE>>:-Wunused-parameter;-Wconversion;-Wpedantic;-O3;-DNDEBUG>")
 
 # Set the appropriate compiler flags (MSVC).
-target_compile_options(fast_int INTERFACE "$<$<CXX_COMPILER_ID:MSVC>:/W4;/WX;/permissive>")
-target_compile_options(fast_int INTERFACE "$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:DEBUG>>:/Od>")
-target_compile_options(fast_int INTERFACE "$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RELEASE>>:/O2>")
+target_compile_options(fast_int_internal_compiler_flags INTERFACE "$<$<CXX_COMPILER_ID:MSVC>:/W4;/WX;/permissive>")
+target_compile_options(fast_int_internal_compiler_flags INTERFACE "$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:DEBUG>>:/Od>")
+target_compile_options(fast_int_internal_compiler_flags INTERFACE "$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RELEASE>>:/O2>")
 
 # Find optional dependencies for the unit tests and benchmark tool.
 include(CMakeDependentOption)

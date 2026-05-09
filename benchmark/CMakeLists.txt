@@ -29,6 +29,7 @@ target_link_libraries(benchmarks
     benchmark::benchmark
     $<$<TARGET_EXISTS:FastFloat::fast_float>:FastFloat::fast_float>
     fast_int
+    fast_int_internal_compiler_flags
 )
 
 target_compile_options(benchmarks
