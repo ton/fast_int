@@ -25,23 +25,24 @@ std::assert(n == 12345);
 Usage
 -----
 
-Only one public function is provided by the library:
+Two public functions are provided by this library. Both adhere to the interface of [`std::from_chars`](https://en.cppreference.com/w/cpp/utility/from_chars), and differ only in the algorithm executed to perform the number conversion:
 
 ```C++
 template<typename T>
 from_chars_result from_chars(const char *first, const char *last, T &value) noexcept;
+
+template<typename T>
+from_chars_result from_chars_swar(const char *first, const char *last, T &value) noexcept;
 ```
 
-This assumes that `T` is of some integral type. In case this precondition is not met, a compiler error is issued. Another precondition is that the textual number is in base 10. Hexadecimal numbers for example are not (yet) supported.
+This assumes that `T` is of some integral type. In case this precondition is not met, a compiler error is issued. Another precondition is that the textual number is in base 10. Hexadecimal numbers for example are not (yet) supported. The result structure `fast_int::from_chars_result` is similar to that of `std::from_chars_result`. Please refer to the documentation of [`std::from_chars`](https://en.cppreference.com/w/cpp/utility/from_chars) for more details.
 
-Other than these limitations, this tries to mimic behavior of [`std::from_chars`](https://en.cppreference.com/w/cpp/utility/from_chars) as closely as possible for integral types.
-
-The result structure `fast_int::from_chars_result` is similar to that of `std::from_chars_result`. Please refer to the documentation of [`std::from_chars`](https://en.cppreference.com/w/cpp/utility/from_chars) for more details.
+The `from_chars_swar` implementation was inspired by [work done by Wojciech Muła](http://0x80.pl/notesen/2014-10-12-parsing-decimal-numbers-part-1-swar.html), and the various blog posts of Daniel Lemire on the topic, e.g. [Quickly parsing eight digits](https://lemire.me/blog/2018/10/03/quickly-parsing-eight-digits/). It has slightly different performance characteristics than `from_chars`, where the latter performs better for smaller strings, whereas `from_chars_swar` has better performance for longer input strings, at least on the machines I have benchmarked so far.
 
 Benchmark results
 -----------------
 
-The benchmarks are somewhat limited, but the results give some impression on the performance of this library relative to other solutions. The following results were obtained on an AMD Ryzen 5 3600 6-Core processor using a Kingston A2000 NVMe SSD. PLYbench was compiled using GCC 13.21, with optimization level -O3.
+The benchmarks are somewhat limited, but the results give some impression on the performance of this library relative to other solutions. The following results were obtained on an AMD Ryzen 5 3600 6-Core processor using a Kingston A2000 NVMe SSD. The benchmark tool was compiled using GCC 13.21, with optimization level -O3.
 
 ```
 2022-08-24T21:39:09+02:00
@@ -119,13 +120,23 @@ $ ninja -C build
 CMake
 -----
 
-Installing this library will automatically install CMake configuration files that allow you to find `fast_int` from other projects:
+You can use `FetchContent` do directly use `fast_int` in your project:
+
+```cmake
+include(FetchContent)
+FetchContent_Declare(
+  fast_int
+  GIT_REPOSITORY https://github.com/ton/fast_int.git
+  GIT_TAG master
+)
+FetchContent_MakeAvailable(fast_int)
+```
+
+This will add a header-only library target `fast_int::fast_int` you can link to for targets that depend on this library. Alternatively, installing this library on your system will automatically install CMake configuration files that allow you to find `fast_int` from other projects:
 
 ```cmake
 find_package(fast_int REQUIRED)
 ```
-
-This will add a header-only library target `fast_int::fast_int` you can link to for targets that depend on this library.
 
 Limitations
 -----------
