@@ -106,7 +106,8 @@ from_chars(const char *first, const char *last, T &value, std::false_type /* uns
   }
   else if (digit_count == max_digit_count<std::uint64_t>())
   {
-    if (first[0] != std::uint8_t('1') || i <= std::numeric_limits<std::int64_t>::max())
+    // handle `std::uint64_t` overflow
+    if (first[0] != std::uint8_t('1') || i <= static_cast<std::uint64_t>(std::numeric_limits<std::int64_t>::max()))
     {
       return {p, std::errc::result_out_of_range};
     }
@@ -203,7 +204,8 @@ from_chars_result from_chars_swar(
   }
   else if (digit_count == max_digit_count<std::uint64_t>())
   {
-    if (first[0] != std::uint8_t('1') || i <= std::numeric_limits<std::int64_t>::max())
+    // handle `std::uint64_t` overflow
+    if (first[0] != std::uint8_t('1') || i <= static_cast<std::uint64_t>(std::numeric_limits<std::int64_t>::max()))
     {
       return {p, std::errc::result_out_of_range};
     }
