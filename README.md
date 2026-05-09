@@ -1,6 +1,8 @@
 fast_int
 --------
 
+![Unit test action status](https://github.com/ton/fast_int/actions/workflows/unittest.yml/badge.svg)
+
 The `fast_int` library provides header-only C++11 implementations for the C++ `from_chars` functions for integer types. Performance of `fast_int` is at least as good as `std::from_chars` on the machines tested so far.
 
 Example
