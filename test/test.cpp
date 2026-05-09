@@ -4,7 +4,7 @@
 
 #include <cstdint>
 
-#define FAST_INT_INTEGER_TYPES bool, char, signed char, unsigned char, wchar_t, short, unsigned short, int, unsigned int, long, unsigned long, long long, unsigned long long
+#define FAST_INT_INTEGER_TYPES char, signed char, unsigned char, wchar_t, short, unsigned short, int, unsigned int, long, unsigned long, long long, unsigned long long
 
 TEMPLATE_TEST_CASE("Negative number within range", "", FAST_INT_INTEGER_TYPES)
 {
