@@ -25,7 +25,7 @@ std::assert(n == 12345);
 Usage
 -----
 
-Two public functions are provided by this library. Both adhere to the interface of [`std::from_chars`](https://en.cppreference.com/w/cpp/utility/from_chars), and differ only in the algorithm executed to perform the number conversion:
+Two public functions are provided by this library. Both adhere to the interface of [`std::from_chars`](https://en.cppreference.com/w/cpp/utility/from_chars), and differ only in the algorithm executed to perform the string conversion:
 
 ```C++
 template<typename T>
@@ -120,7 +120,7 @@ $ ninja -C build
 CMake
 -----
 
-You can use `FetchContent` do directly use `fast_int` in your project:
+You can use `FetchContent` to directly use `fast_int` in your project:
 
 ```cmake
 include(FetchContent)
