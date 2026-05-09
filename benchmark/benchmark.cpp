@@ -19,7 +19,7 @@ struct Input
 };
 
 template<typename T>
-Input<T> generate_input(int range)
+Input<T> generate_input(std::int64_t range)
 {
   static std::map<int, Input<T>> inputs;
 

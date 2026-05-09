@@ -81,8 +81,8 @@ from_chars(const char *first, const char *last, T &value, std::true_type /* sign
     return {start_digits + digit_count, std::errc::result_out_of_range};
   }
 
-  value = negative ? (~i + 1) : i;  // convert to a negative number if needed
-                                    // (two's complement)
+  value = static_cast<T>(negative ? (~i + 1) : i);  // convert to a negative number if needed
+                                                    // (two's complement)
 
   return {p, std::errc{}};
 }
@@ -112,7 +112,7 @@ from_chars(const char *first, const char *last, T &value, std::false_type /* uns
     }
   }
 
-  value = i;
+  value = static_cast<T>(i);
 
   return {p, std::errc{}};
 }
@@ -168,8 +168,8 @@ from_chars_swar(const char *first, const char *last, T &value, std::true_type /*
     return {start_digits + digit_count, std::errc::result_out_of_range};
   }
 
-  value = negative ? (~i + 1) : i;  // convert to a negative number if needed
-                                    // (two's complement)
+  value = static_cast<T>(negative ? (~i + 1) : i);  // convert to a negative number if needed
+                                                    // (two's complement)
 
   return {p, std::errc{}};
 }
@@ -209,7 +209,7 @@ from_chars_result from_chars_swar(
     }
   }
 
-  value = i;
+  value = static_cast<T>(i);
 
   return {p, std::errc{}};
 }
