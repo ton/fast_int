@@ -27,9 +27,9 @@ target_include_directories(fast_int
 target_compile_features(fast_int INTERFACE cxx_std_11)
 
 # Set the appropriate compiler flags (GCC).
-target_compile_options(fast_int INTERFACE "$<$<CXX_COMPILER_ID:GNU>:-Wall;-Werror;-Wextra;-Wshadow;-Wno-unused-parameter;-Wstrict-overflow;-fno-strict-aliasing;-march=native>")
-target_compile_options(fast_int INTERFACE "$<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:DEBUG>>:-g;-Wno-unused-variable;-Wno-unused-function>")
-target_compile_options(fast_int INTERFACE "$<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:RELEASE>>:-Wconversion;-Wpedantic;-O3;-DNDEBUG>")
+target_compile_options(fast_int INTERFACE "$<$<CXX_COMPILER_ID:GNU>:-Wall;-Werror;-Wextra;-Wshadow;-Wstrict-overflow;-fno-strict-aliasing;-march=native>")
+target_compile_options(fast_int INTERFACE "$<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:DEBUG>>:-g;-Wno-unused-parameter;-Wno-unused-variable;-Wno-unused-function>")
+target_compile_options(fast_int INTERFACE "$<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:RELEASE>>:-Wunused-parameter;-Wconversion;-Wpedantic;-O3;-DNDEBUG>")
 
 # Set the appropriate compiler flags (MSVC).
 target_compile_options(fast_int INTERFACE "$<$<CXX_COMPILER_ID:MSVC>:/W4;/WX;/permissive>")
